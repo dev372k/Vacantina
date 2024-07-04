@@ -22,6 +22,7 @@ public static class ConfigureServices
     public static void Repositories(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddScoped<IUserRepo, UserRepo>();
+        services.AddScoped<IBlogRepo, BlogRepo>();
     }
 
     public static void Misc(this IServiceCollection services, IConfiguration configuration)

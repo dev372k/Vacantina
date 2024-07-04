@@ -1,4 +1,5 @@
-﻿using DL.Commons;
+﻿using Application.Implementations;
+using DL.Commons;
 using Domain.Document;
 using Domain.Repositories;
 using Microsoft.AspNetCore.Mvc;
@@ -14,8 +15,13 @@ public class AuthController(IUserRepo _userRepo) : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Post(AddUserDTO request) 
         => Ok(await _userRepo.InsertAsync(request).ToResponse(message: ResponseMessages.USER_ADDED));
-    
+
     [HttpGet]
-    public async Task<IActionResult> Get() 
-        => Ok(await _userRepo.GetUsersAsync().ToResponse(message: ResponseMessages.USER_ADDED));
+    public async Task<IActionResult> Get()
+        => Ok(await _userRepo.GetUsersAsync().ToResponse());
+
+    [HttpGet("{id}")]
+    public async Task<IActionResult> Get(string id)
+        => Ok(await _userRepo.GetUserAsync(id).ToResponse());
+
 }
