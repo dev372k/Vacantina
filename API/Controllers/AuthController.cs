@@ -14,4 +14,8 @@ public class AuthController(IUserRepo _userRepo) : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Post(AddUserDTO request) 
         => Ok(await _userRepo.InsertAsync(request).ToResponse(message: ResponseMessages.USER_ADDED));
+    
+    [HttpGet]
+    public async Task<IActionResult> Get() 
+        => Ok(await _userRepo.GetUsersAsync().ToResponse(message: ResponseMessages.USER_ADDED));
 }
