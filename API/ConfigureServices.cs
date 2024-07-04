@@ -1,5 +1,5 @@
-﻿using Domain.Repositories;
-using Infrastructure.Implementations;
+﻿using Application.Implementations;
+using Domain.Repositories;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using MongoDB.Driver;

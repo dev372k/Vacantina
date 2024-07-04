@@ -10,9 +10,6 @@ namespace DL.Commons
     {
         public const string USER_ADDED = "User registered successfully";
         public const string USER_DELETED = "User deleted successfully";
-
-        public const string CATEGORY_ADDED = "Category registered successfully";
-        public const string CATEGORY_DELETED = "Category deleted successfully";
     }
 
     public class ExceptionMessages

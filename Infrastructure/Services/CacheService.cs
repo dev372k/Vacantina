@@ -5,7 +5,7 @@ using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json;
 using Shared.Helpers;
 
-namespace Application.Services;
+namespace Infrastructure.Services;
 
 
 public class CacheService : ICacheService

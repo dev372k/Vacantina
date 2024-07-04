@@ -3,7 +3,7 @@ using Domain.Repositories.Base;
 using MongoDB.Driver;
 using System.Linq.Expressions;
 
-namespace Infrastructure.Implementations.Base;
+namespace Application.Implementations.Base;
 
 public class BaseRepo<T> : IBaseRepo<T> where T : BaseEntity
 {

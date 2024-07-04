@@ -1,5 +1,4 @@
-﻿using API.Models;
-using System.Net;
+﻿using System.Net;
 
 namespace API.Middlewares
 {
@@ -26,7 +25,7 @@ namespace API.Middlewares
             {
                 context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
                 _logger.LogError($"Error Message: {ex}\n Error Detail: {ex.InnerException?.ToString()}");
-                await context.Response.WriteAsJsonAsync(new ResponseModel()
+                await context.Response.WriteAsJsonAsync(new
                 {
                     Status = false,
                     StatusCode = context.Response.StatusCode,

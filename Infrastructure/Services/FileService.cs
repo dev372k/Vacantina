@@ -1,8 +1,7 @@
 ﻿using Domain.Repositories.Services;
 using Shared.Commons;
 
-namespace Application.Services;
-
+namespace Infrastructure.Services;
 
 public class FileService : IFileService
 {
