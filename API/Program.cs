@@ -7,7 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 Log.Logger = new LoggerConfiguration()
 .MinimumLevel.Warning()
-    .WriteTo.File(PathConstants.LOGPATH, rollingInterval: RollingInterval.Day)
+    .WriteTo.File(MiscilenousConstants.LOGPATH, rollingInterval: RollingInterval.Day)
     .CreateLogger();
 
 builder.Services.APIServicesRegistry(builder.Configuration);
@@ -30,7 +30,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseCors(PathConstants._policy);
+app.UseCors(MiscilenousConstants._policy);
 app.UseHttpsRedirection();
 
 app.UseAuthorization();

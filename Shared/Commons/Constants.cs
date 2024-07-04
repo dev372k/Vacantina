@@ -1,6 +1,6 @@
 ﻿namespace Shared.Commons;
 
-public class PathConstants
+public class MiscilenousConstants
 {
     public const string _policy = "CorsPolicy";
     public const string IMAGEPATH = "Images";

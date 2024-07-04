@@ -8,7 +8,7 @@ public class FileService : IFileService
 {
     public async Task<string> SaveImage(byte[] imageData)
     {
-        var filename = Path.Combine(PathConstants.IMAGEPATH, $"{Guid.NewGuid()}.jpeg");
+        var filename = Path.Combine(MiscilenousConstants.IMAGEPATH, $"{Guid.NewGuid()}.jpeg");
         string filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", filename);
 
         await File.WriteAllBytesAsync(filePath, imageData);

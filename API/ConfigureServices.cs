@@ -29,7 +29,7 @@ public static class ConfigureServices
         //services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
         services.AddCors(opt =>
         {
-            opt.AddPolicy(name: PathConstants._policy, builder =>
+            opt.AddPolicy(name: MiscilenousConstants._policy, builder =>
             {
                 builder.AllowAnyOrigin()
                     .AllowAnyHeader()
