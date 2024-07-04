@@ -4,7 +4,10 @@ using Domain.Document;
 using Domain.Repositories;
 using MongoDB.Driver;
 using Shared.DTOs.UserDTOs;
+using Shared.Exceptions;
+using Shared.Exceptions.Messages;
 using Shared.Helpers;
+using System.Net;
 
 namespace Application.Implementations;
 
@@ -19,7 +22,8 @@ public class UserRepo : BaseRepo<User>, IUserRepo
     public async Task InsertAsync(AddUserDTO dto)
     {
         if (await GetUserbyEmailAsync(dto.Email))
-            throw new Exception(ExceptionMessages.USER_ALREADY_EXIST);
+            throw new CustomException(HttpStatusCode.OK, ExceptionMessages.USER_ALREADY_EXIST);
+        //throw new Exception(ExceptionMessages.USER_ALREADY_EXIST);
 
         await InsertAsync(new User
         (

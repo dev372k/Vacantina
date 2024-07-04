@@ -11,11 +11,4 @@ namespace DL.Commons
         public const string USER_ADDED = "User registered successfully";
         public const string USER_DELETED = "User deleted successfully";
     }
-
-    public class ExceptionMessages
-    {
-        public const string USER_DOESNOT_EXIST = "User does not exist.";
-        public const string USER_ALREADY_EXIST = "User already exists.";
-        public const string INVALID_CREDENTIALS = "Invalid credentials.";
-    }
 }

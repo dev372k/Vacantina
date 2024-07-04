@@ -1,4 +1,5 @@
 using API;
+using API.Middlewares;
 using Serilog;
 using Shared.Commons;
 
@@ -31,6 +32,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseCors(MiscilenousConstants._policy);
+app.UseMiddleware<CustomMiddleware>();
+
 app.UseHttpsRedirection();
 
 app.UseAuthorization();

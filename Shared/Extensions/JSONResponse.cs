@@ -1,7 +1,9 @@
-﻿using System;
+﻿using Shared.Exceptions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Shared.Extensions
@@ -13,7 +15,7 @@ namespace Shared.Extensions
         {
             try
             {
-                await task; // Await the task
+                await task; 
                 return new ResponseModel
                 {
                     Status = status,
@@ -22,13 +24,12 @@ namespace Shared.Extensions
                     Data = data
                 };
             }
-            catch (Exception ex)
-            {
-                // Handle exception and return error response
+            catch (CustomException ex)
+            {               
                 return new ResponseModel
                 {
                     Status = false,
-                    StatusCode = 400,
+                    StatusCode = (int)ex.StatusCode,
                     Message = ex.Message
                 };
             }
@@ -41,6 +42,7 @@ namespace Shared.Extensions
         public bool Status { get; set; } = true;
         public int StatusCode { get; set; } = 200;
         public string Message { get; set; } = string.Empty;
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public object Data { get; set; }
     }
 }

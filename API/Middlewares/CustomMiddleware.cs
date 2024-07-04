@@ -1,14 +1,16 @@
-﻿using System.Net;
+﻿using Shared.Exceptions;
+using Shared.Extensions;
+using System.Net;
 
 namespace API.Middlewares
 {
-    public class ExceptionMiddleware
+    public class CustomMiddleware
     {
         private readonly RequestDelegate _next;
-        private readonly ILogger<ExceptionMiddleware> _logger;
+        private readonly ILogger<CustomMiddleware> _logger;
         private readonly IConfiguration _config;
 
-        public ExceptionMiddleware(RequestDelegate next, ILogger<ExceptionMiddleware> logger, IConfiguration config)
+        public CustomMiddleware(RequestDelegate next, ILogger<CustomMiddleware> logger, IConfiguration config)
         {
             _next = next;
             _logger = logger;
@@ -21,15 +23,14 @@ namespace API.Middlewares
             {
                 await _next(context);
             }
-            catch (Exception ex)
+            catch (CustomException ex)
             {
-                context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
                 _logger.LogError($"Error Message: {ex}\n Error Detail: {ex.InnerException?.ToString()}");
-                await context.Response.WriteAsJsonAsync(new
+                await context.Response.WriteAsJsonAsync(new ResponseModel   
                 {
                     Status = false,
-                    StatusCode = context.Response.StatusCode,
-                    Message = "Internal Server Error."
+                    StatusCode = (int)ex.StatusCode,
+                    Message = ex.Message
                 });
             }
         }
