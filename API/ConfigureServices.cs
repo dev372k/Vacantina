@@ -82,11 +82,7 @@ public static class ConfigureServices
 
         services.AddSingleton<IMongoClient>(c =>
         {
-            var login = "";
-            var password = Uri.EscapeDataString("");
-            var server = "";
-
-            return new MongoClient($"mongodb+srv://{login}:{password}@{server}/test?retryWrites=true&w=majority");
+            return new MongoClient($"mongodb+srv://Owais:owais@cluster0.wde1dec.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0");
         });
 
         services.AddScoped(c => c.GetService<IMongoClient>().StartSession());

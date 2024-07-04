@@ -7,7 +7,7 @@ namespace Infrastructure.Implementations.Base;
 
 public class BaseRepo<T> : IBaseRepo<T> where T : BaseEntity
 {
-    private const string DATABASE = "poc_dotnet_mongodb";
+    private const string _database = "Vacantina";
     private readonly IMongoClient _mongoClient;
     private readonly IClientSessionHandle _clientSessionHandle;
     private readonly string _collection;
@@ -16,12 +16,12 @@ public class BaseRepo<T> : IBaseRepo<T> where T : BaseEntity
     {
         (_mongoClient, _clientSessionHandle, _collection) = (mongoClient, clientSessionHandle, collection);
 
-        if (!_mongoClient.GetDatabase(DATABASE).ListCollectionNames().ToList().Contains(collection))
-            _mongoClient.GetDatabase(DATABASE).CreateCollection(collection);
+        if (!_mongoClient.GetDatabase(_database).ListCollectionNames().ToList().Contains(collection))
+            _mongoClient.GetDatabase(_database).CreateCollection(collection);
     }
 
     protected virtual IMongoCollection<T> Collection =>
-        _mongoClient.GetDatabase(DATABASE).GetCollection<T>(_collection);
+        _mongoClient.GetDatabase(_database).GetCollection<T>(_collection);
 
     public async Task InsertAsync(T obj) =>
         await Collection.InsertOneAsync(_clientSessionHandle, obj);
