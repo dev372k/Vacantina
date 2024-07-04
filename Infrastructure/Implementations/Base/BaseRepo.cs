@@ -1,24 +1,18 @@
-﻿using Application.Entities.Base;
-using Application.Interfaces.Base;
-using Domain.Document.Base;
+﻿using Domain.Document.Base;
 using Domain.Repositories.Base;
 using MongoDB.Driver;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 namespace Infrastructure.Implementations.Base;
 
-public class BaseRepository<T> : IBaseRepo<T> where T : BaseEntity
+public class BaseRepo<T> : IBaseRepo<T> where T : BaseEntity
 {
     private const string DATABASE = "poc_dotnet_mongodb";
     private readonly IMongoClient _mongoClient;
     private readonly IClientSessionHandle _clientSessionHandle;
     private readonly string _collection;
 
-    public BaseRepository(IMongoClient mongoClient, IClientSessionHandle clientSessionHandle, string collection)
+    public BaseRepo(IMongoClient mongoClient, IClientSessionHandle clientSessionHandle, string collection)
     {
         (_mongoClient, _clientSessionHandle, _collection) = (mongoClient, clientSessionHandle, collection);
 
