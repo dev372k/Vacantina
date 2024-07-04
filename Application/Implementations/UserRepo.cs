@@ -15,15 +15,12 @@ public class UserRepo : BaseRepo<User>, IUserRepo
 {
     public UserRepo(
         IMongoClient mongoClient,
-        IClientSessionHandle clientSessionHandle) : base(mongoClient, clientSessionHandle, "user")
-    {
+        IClientSessionHandle clientSessionHandle) : base(mongoClient, clientSessionHandle, "user") { }
 
-    }
     public async Task InsertAsync(AddUserDTO dto)
     {
         if (await GetUserbyEmailAsync(dto.Email))
             throw new CustomException(HttpStatusCode.OK, ExceptionMessages.USER_ALREADY_EXIST);
-        //throw new Exception(ExceptionMessages.USER_ALREADY_EXIST);
 
         await InsertAsync(new User
         (

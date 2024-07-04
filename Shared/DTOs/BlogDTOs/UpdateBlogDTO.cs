@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace Shared.DTOs.BlogDTOs
 {
-    public class AddBlogDTO
+    public class UpdateBlogDTO
     {
+        public string Id { get; set; }
         public string Title { get; set; }
 
         public string Content { get; set; }

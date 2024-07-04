@@ -10,5 +10,9 @@ namespace DL.Commons
     {
         public const string USER_ADDED = "User registered successfully";
         public const string USER_DELETED = "User deleted successfully";
+        
+        public const string BLOG_ADDED = "Blog added successfully";
+        public const string BLOG_UPDATED = "Blog updated successfully";
+        public const string BLOG_DELETED = "Blog updated successfully";
     }
 }

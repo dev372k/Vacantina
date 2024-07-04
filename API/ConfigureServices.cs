@@ -27,7 +27,6 @@ public static class ConfigureServices
 
     public static void Misc(this IServiceCollection services, IConfiguration configuration)
     {
-        //services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
         services.AddCors(opt =>
         {
             opt.AddPolicy(name: MiscilenousConstants._policy, builder =>
@@ -50,9 +49,9 @@ public static class ConfigureServices
             options.SwaggerDoc("v1",
              new OpenApiInfo
              {
-                 Title = "topE",
+                 Title = "Vacantina",
                  Version = "v1",
-                 Description = "",
+                 Description = "The travel you want",
              });
             options.OperationFilter<SecurityRequirementsOperationFilter>();
         });
@@ -72,9 +71,9 @@ public static class ConfigureServices
 
     public static void Services(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddScoped<IUserRepo, UserRepo>();
         //services.AddScoped<IFileService, FileService>();
         //services.AddScoped<ICacheService, CacheService>();
+        //services.AddScoped<IEmailService, EmailService>();
         services.AddMemoryCache();
     }
     

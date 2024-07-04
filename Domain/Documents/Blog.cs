@@ -11,8 +11,8 @@ namespace Domain.Documents;
 
 public class Blog : BaseEntity
 {
-    public Blog(string title, string content, string imageURL, List<string> tags) =>
-        (Title, Content, ImageURL, Tags) = (title, content, imageURL, tags);
+    public Blog(string title, string content, string imageURL,bool isFeatured, List<string> tags) =>
+        (Title, Content, ImageURL, IsFeatured, Tags) = (title, content, imageURL, isFeatured, tags);
 
     [BsonElement("title")]
     public string Title { get; }
@@ -22,6 +22,9 @@ public class Blog : BaseEntity
 
     [BsonElement("imageURL")]
     public string ImageURL { get; }
+
+    [BsonElement("isFeatured")]
+    public bool IsFeatured { get; }
 
     [BsonElement("tags")]
     public List<string> Tags { get; }
