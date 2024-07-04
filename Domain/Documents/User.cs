@@ -1,4 +1,4 @@
-﻿using DL.Commons;
+﻿using Shared.Commons;
 using Domain.Document.Base;
 using MongoDB.Bson.Serialization.Attributes;
 

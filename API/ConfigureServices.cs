@@ -1,5 +1,7 @@
 ﻿using Application.Implementations;
 using Domain.Repositories;
+using Domain.Repositories.Services;
+using Infrastructure.Services;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using MongoDB.Driver;
@@ -23,6 +25,7 @@ public static class ConfigureServices
     {
         services.AddScoped<IUserRepo, UserRepo>();
         services.AddScoped<IBlogRepo, BlogRepo>();
+        services.AddScoped<IAppRepo, AppRepo>();
     }
 
     public static void Misc(this IServiceCollection services, IConfiguration configuration)
@@ -71,9 +74,9 @@ public static class ConfigureServices
 
     public static void Services(this IServiceCollection services, IConfiguration configuration)
     {
-        //services.AddScoped<IFileService, FileService>();
-        //services.AddScoped<ICacheService, CacheService>();
-        //services.AddScoped<IEmailService, EmailService>();
+        services.AddScoped<IFileService, FileService>();
+        services.AddScoped<ICacheService, CacheService>();
+        services.AddScoped<IEmailService, EmailService>();
         services.AddMemoryCache();
     }
     

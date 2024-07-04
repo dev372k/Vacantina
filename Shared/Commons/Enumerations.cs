@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DL.Commons
+namespace Shared.Commons;
+
+public enum enRole
 {
-    public enum enRole
-    {
-        Admin,
-        User
-    }
+    Admin,
+    User
 }

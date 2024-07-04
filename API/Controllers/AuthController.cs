@@ -1,6 +1,6 @@
-﻿using DL.Commons;
-using Domain.Repositories;
+﻿using Domain.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using Shared.Commons;
 using Shared.DTOs.UserDTOs;
 using Shared.Extensions;
 
