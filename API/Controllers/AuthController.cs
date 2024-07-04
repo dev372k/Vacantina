@@ -17,5 +17,9 @@ public class AuthController(IUserRepo _userRepo) : ControllerBase
     
     [HttpGet]
     public async Task<IActionResult> Get() 
-        => Ok(await _userRepo.GetUsersAsync().ToResponse(message: ResponseMessages.USER_ADDED));
+        => Ok(await _userRepo.GetUsersAsync().ToResponse());
+    
+    [HttpGet("{id}")]
+    public async Task<IActionResult> Get(string id) 
+        => Ok(await _userRepo.GetUserAsync(id).ToResponse());
 }
