@@ -10,9 +10,17 @@ namespace API.Controllers;
 [ApiController]
 public class AuthController(IUserRepo _userRepo) : ControllerBase
 {
-    [HttpPost]
-    public async Task<IActionResult> Post(AddUserDTO request) 
+    [HttpPost("register")]
+    public async Task<IActionResult> Register(AddUserDTO request) 
         => Ok(await _userRepo.InsertAsync(request).ToResponse(message: ResponseMessages.USER_ADDED));
+    
+    [HttpPost("login")]
+    public async Task<IActionResult> Login(LoginDTO request) 
+        => Ok(await _userRepo.LoginAsync(request).ToResponse());
+    
+    [HttpPost("login/google")]
+    public async Task<IActionResult> GoogleLogin(GoogleLoginDTO request) 
+        => Ok(await _userRepo.GoogleLoginAsync(request).ToResponse());
     
     [HttpGet]
     public async Task<IActionResult> Get()

@@ -1,4 +1,5 @@
 ﻿using Domain.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shared.Commons;
 using Shared.DTOs.BlogDTOs;
@@ -10,23 +11,23 @@ namespace API.Controllers
     [ApiController]
     public class BlogController(IBlogRepo _blogRepo) : ControllerBase
     {
-        [HttpPost]
+        [HttpPost, Authorize(Roles = "Admin")]
         public async Task<IActionResult> Post(AddBlogDTO request)
             => Ok(await _blogRepo.InsertAsync(request).ToResponse(message: ResponseMessages.BLOG_ADDED));
 
-        [HttpPut]
+        [HttpPut, Authorize(Roles = "Admin")]
         public async Task<IActionResult> Put(UpdateBlogDTO request)
             => Ok(await _blogRepo.UpdateAsync(request).ToResponse(message: ResponseMessages.BLOG_UPDATED));
 
-        [HttpGet]
+        [HttpGet, Authorize(Roles = "Admin")]
         public async Task<IActionResult> Get()
             => Ok(await _blogRepo.GetUsersAsync().ToResponse());
 
-        [HttpGet("{id}")]
+        [HttpGet("{id}"), Authorize(Roles = "Admin")]
         public async Task<IActionResult> Get(string id)
             => Ok(await _blogRepo.GetUserAsync(id).ToResponse());
         
-        [HttpDelete("{id}")]
+        [HttpDelete("{id}"), Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(string id)
             => Ok(await _blogRepo.DeleteAsync(id).ToResponse(message: ResponseMessages.BLOG_DELETED));
     }

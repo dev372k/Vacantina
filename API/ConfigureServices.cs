@@ -2,6 +2,7 @@
 using Domain.Repositories;
 using Domain.Repositories.Services;
 using Infrastructure.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using MongoDB.Driver;
@@ -59,17 +60,28 @@ public static class ConfigureServices
             options.OperationFilter<SecurityRequirementsOperationFilter>();
         });
 
-        services.AddAuthentication().AddJwtBearer(options =>
+        services.AddAuthentication(options =>
         {
-            options.TokenValidationParameters = new TokenValidationParameters
+            options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+        })
+            //.AddGoogle(googleOptions =>
+            //{
+            //    googleOptions.ClientId = "933017194074-dp2kaj9jolvebu8u14uluqms0mibj9e2.apps.googleusercontent.com";
+            //    googleOptions.ClientSecret = "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";
+            //})
+            .AddJwtBearer(options =>
             {
-                ValidateIssuerSigningKey = true,
-                ValidateAudience = false,
-                ValidateIssuer = false,
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
-                        configuration.GetSection("SecretKeys:JWT").Value!))
-            };
-        });
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    ValidateAudience = false,
+                    ValidateIssuer = false,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
+                            configuration.GetSection("SecretKeys:JWT").Value!))
+                };
+            });
+
     }
 
     public static void Services(this IServiceCollection services, IConfiguration configuration)
@@ -79,7 +91,7 @@ public static class ConfigureServices
         services.AddScoped<IEmailService, EmailService>();
         services.AddMemoryCache();
     }
-    
+
     public static void Database(this IServiceCollection services, IConfiguration configuration)
     {
 

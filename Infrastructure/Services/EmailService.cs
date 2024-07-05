@@ -2,6 +2,7 @@
 using MailKit.Net.Smtp;
 using MailKit.Security;
 using MimeKit;
+using Shared.Helpers;
 
 
 namespace Infrastructure.Services;
@@ -17,9 +18,9 @@ public class EmailService : IEmailService
 
     public async Task SendEmailAsync(List<string> recipients, string subject, string body)
     {
-        Appsettings _mailSettings = Appsettings.Instance;
+        Appsettings appsettings = Appsettings.Instance;
         var email = new MimeMessage();
-        email.Sender = MailboxAddress.Parse(_mailSettings.Email);
+        email.Sender = MailboxAddress.Parse(appsettings.GetValue("MailSettings:Email"));
 
         foreach (var recipient in recipients)
             email.To.Add(MailboxAddress.Parse(recipient));
@@ -32,8 +33,8 @@ public class EmailService : IEmailService
 
         using (var smtp = new SmtpClient())
         {
-            await smtp.ConnectAsync(_mailSettings.Host, _mailSettings.Port, SecureSocketOptions.StartTls);
-            await smtp.AuthenticateAsync(_mailSettings.Email, _mailSettings.Password);
+            await smtp.ConnectAsync(appsettings.GetValue("MailSettings:Host"), ConversionHelper.ConvertTo<int>(appsettings.GetValue("MailSettings:Port")), SecureSocketOptions.StartTls);
+            await smtp.AuthenticateAsync(appsettings.GetValue("MailSettings:Email"), appsettings.GetValue("MailSettings:Password"));
             await smtp.SendAsync(email);
             await smtp.DisconnectAsync(true);
         }
