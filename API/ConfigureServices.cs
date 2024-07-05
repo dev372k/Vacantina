@@ -67,8 +67,8 @@ public static class ConfigureServices
         })
             //.AddGoogle(googleOptions =>
             //{
-            //    googleOptions.ClientId = "933017194074-dp2kaj9jolvebu8u14uluqms0mibj9e2.apps.googleusercontent.com";
-            //    googleOptions.ClientSecret = "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";
+            //    googleOptions.ClientId = configuration.GetSection("GoogleAuth:ClientId").Value!;
+            //    googleOptions.ClientSecret = configuration.GetSection("GoogleAuth:ClientSecret").Value!;
             //})
             .AddJwtBearer(options =>
             {
