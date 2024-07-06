@@ -65,11 +65,11 @@ public static class ConfigureServices
             options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
             options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
         })
-            //.AddGoogle(googleOptions =>
-            //{
-            //    googleOptions.ClientId = configuration.GetSection("GoogleAuth:ClientId").Value!;
-            //    googleOptions.ClientSecret = configuration.GetSection("GoogleAuth:ClientSecret").Value!;
-            //})
+            .AddGoogle(googleOptions =>
+            {
+                googleOptions.ClientId = configuration.GetSection("GoogleAuth:ClientId").Value!;
+                googleOptions.ClientSecret = configuration.GetSection("GoogleAuth:ClientSecret").Value!;
+            })
             .AddJwtBearer(options =>
             {
                 options.TokenValidationParameters = new TokenValidationParameters
