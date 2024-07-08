@@ -23,7 +23,7 @@ public class PaymentGateway : IPaymentGateway
         return new ChargeService().Create(options);
     }
 
-    public Customer CreateCustomer(string email, string cardToken, string name = null)
+    public Customer CreateCustomer(string email, string cardToken, string name = "")
     {
         var options = new CustomerCreateOptions
         {
