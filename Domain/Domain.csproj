@@ -8,6 +8,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="MongoDB.Driver" Version="2.27.0" />
+		<PackageReference Include="Stripe.net" Version="45.2.0" />
 	</ItemGroup>
 
 	<ItemGroup>
