@@ -11,7 +11,7 @@ public class PaymentGateway : IPaymentGateway
         StripeConfiguration.ApiKey = Appsettings.Instance.GetValue("Stripe:SecretKey");
     }
 
-    public Charge CreateCharge(string token, decimal amount, string currency = "usd")
+    public async Task<Charge> CreateChargeAsync(string token, decimal amount, string currency = "usd")
     {
         var options = new ChargeCreateOptions
         {
@@ -21,10 +21,12 @@ public class PaymentGateway : IPaymentGateway
             Description = "Test Charge"
         };
 
-        return new ChargeService().Create(options);
+        var service = new ChargeService();
+        Charge charge = await service.CreateAsync(options);
+        return charge;
     }
 
-    public Customer CreateCustomer(string email, string cardToken, string name = "")
+    public async Task<Customer> CreateCustomersync(string email, string name, string cardToken)
     {
         var options = new CustomerCreateOptions
         {
@@ -33,6 +35,25 @@ public class PaymentGateway : IPaymentGateway
             Source = cardToken,
         };
 
-        return new CustomerService().Create(options);
+        var service = new CustomerService();
+        Customer customer = await service.CreateAsync(options);
+        return customer;
+    }
+
+    public async Task<PaymentIntent> ChargeCustomerAsync(string customerId, long amount, string currency = "usd")
+    {
+        var options = new PaymentIntentCreateOptions
+        {
+            Customer = customerId,
+            Amount = amount,
+            Currency = currency,
+            PaymentMethodTypes = new List<string> { "card" },
+            OffSession = true, 
+            Confirm = true     
+        };
+
+        var service = new PaymentIntentService();
+        PaymentIntent paymentIntent = await service.CreateAsync(options);
+        return paymentIntent;
     }
 }
