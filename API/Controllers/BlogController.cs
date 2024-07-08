@@ -11,23 +11,28 @@ namespace API.Controllers
     [ApiController]
     public class BlogController(IBlogRepo _blogRepo) : ControllerBase
     {
-        [HttpPost, Authorize(Roles = "Admin")]
+        [HttpPost, Authorize]
+        [IsAuthorized(["Admin"])]
         public async Task<IActionResult> Post(AddBlogDTO request)
             => Ok(await _blogRepo.InsertAsync(request).ToResponse(message: ResponseMessages.BLOG_ADDED));
 
-        [HttpPut, Authorize(Roles = "Admin")]
+        [HttpPut, Authorize]
+        [IsAuthorized(["Admin"])]
         public async Task<IActionResult> Put(UpdateBlogDTO request)
             => Ok(await _blogRepo.UpdateAsync(request).ToResponse(message: ResponseMessages.BLOG_UPDATED));
 
-        [HttpGet, Authorize(Roles = "Admin")]
+        [HttpGet, Authorize]
+        [IsAuthorized(["Admin"])]
         public async Task<IActionResult> Get()
             => Ok(await _blogRepo.GetUsersAsync().ToResponse());
 
-        [HttpGet("{id}"), Authorize(Roles = "Admin")]
+        [HttpGet("{id}"), Authorize]
+        [IsAuthorized(["Admin"])]
         public async Task<IActionResult> Get(string id)
             => Ok(await _blogRepo.GetUserAsync(id).ToResponse());
         
-        [HttpDelete("{id}"), Authorize(Roles = "Admin")]
+        [HttpDelete("{id}"), Authorize]
+        [IsAuthorized(["Admin"])]
         public async Task<IActionResult> Delete(string id)
             => Ok(await _blogRepo.DeleteAsync(id).ToResponse(message: ResponseMessages.BLOG_DELETED));
     }

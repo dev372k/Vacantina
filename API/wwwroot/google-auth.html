@@ -24,12 +24,7 @@
                 }
 
                 const userData = await backendResponse.json();
-                console.log('User Data from Backend:', userData);
-                document.getElementById('userInfo').innerHTML = `
-                    <p><strong>Name:</strong> ${userData.name}</p>
-                    <p><strong>Email:</strong> ${userData.email}</p>
-                    <img src="${userData.picture}" alt="Profile Picture" width="100">
-                `;
+                document.getElementById('userInfo').innerHTML = `<p><strong>ID Token:</strong> ${userData.data}</p>`;
             } catch (error) {
                 console.error('Error:', error);
                 document.getElementById('userInfo').innerText = 'Authentication failed';
