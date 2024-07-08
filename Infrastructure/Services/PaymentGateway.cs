@@ -1,4 +1,5 @@
 ﻿using Domain.Repositories.Services;
+using Shared.Helpers;
 using Stripe;
 
 namespace Infrastructure.Services;
@@ -14,7 +15,7 @@ public class PaymentGateway : IPaymentGateway
     {
         var options = new ChargeCreateOptions
         {
-            Amount = (int)(amount * 100),
+            Amount = amount.ToEuro(),
             Currency = currency,
             Source = token,
             Description = "Test Charge"
