@@ -89,6 +89,7 @@ public static class ConfigureServices
         services.AddScoped<IFileService, FileService>();
         services.AddScoped<ICacheService, CacheService>();
         services.AddScoped<IEmailService, EmailService>();
+        services.AddScoped<IPaymentGateway, PaymentGateway>();
         services.AddMemoryCache();
     }
 
