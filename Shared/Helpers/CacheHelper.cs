@@ -6,7 +6,7 @@ namespace Shared.Helpers;
 
 public class CacheHelper
 {
-    public MemoryCacheEntryOptions CacheOptions()
+    public static MemoryCacheEntryOptions CacheOptions()
     {
         Appsettings appsettings = Appsettings.Instance; 
 

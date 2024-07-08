@@ -1,13 +1,10 @@
-﻿
-using Domain.Repositories.Services;
+﻿using Domain.Repositories.Services;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json;
 using Shared.Helpers;
 
 namespace Infrastructure.Services;
-
-
 public class CacheService : ICacheService
 {
     private readonly IMemoryCache _cache;
