@@ -21,8 +21,9 @@ public class StateHelper : IStateHelper
     public GetUserDTO User()
     {
         var result = string.Empty;
-        if (_httpContextAccessor.HttpContext is not null)
-            result = _httpContextAccessor.HttpContext.User.Identities.FirstOrDefault(_ => _.Name == ClaimTypes.UserData)!.ToString();
+        if (_httpContextAccessor.HttpContext is not null)      
+            result = _httpContextAccessor.HttpContext.User.Claims.FirstOrDefault(_ => _.Type == ClaimTypes.UserData).Value;
+       
         return JsonConvert.DeserializeObject<GetUserDTO>(result!)!;
     }
 }
