@@ -22,7 +22,7 @@ public class StateHelper : IStateHelper
     {
         var result = string.Empty;
         if (_httpContextAccessor.HttpContext is not null)
-            result = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.UserData).ToString();
-        return JsonConvert.DeserializeObject<GetUserDTO>(result);
+            result = _httpContextAccessor.HttpContext.User.Identities.FirstOrDefault(_ => _.Name == ClaimTypes.UserData)!.ToString();
+        return JsonConvert.DeserializeObject<GetUserDTO>(result!)!;
     }
 }
