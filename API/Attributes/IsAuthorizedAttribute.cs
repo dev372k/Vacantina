@@ -32,7 +32,7 @@ public class IsAuthorizedAttribute : Attribute, IActionFilter
             return;
         }
 
-        GetUserDTO userData = ValidateJwtAndGetUserData(jwtToken);
+        GetUserDTO userData = ValidateJWTAndGetUserData(jwtToken);
 
         if (userData != null && UserHasPermission(userData, _role))
             return;
@@ -42,15 +42,15 @@ public class IsAuthorizedAttribute : Attribute, IActionFilter
 
     public void OnActionExecuted(ActionExecutedContext context) { }
 
-    private GetUserDTO ValidateJwtAndGetUserData(string jwtToken)
+    private GetUserDTO ValidateJWTAndGetUserData(string jwtToken)
     {
         var handler = new JwtSecurityTokenHandler();
         var token = handler.ReadJwtToken(jwtToken);
 
         var userDataJson = token.Claims.FirstOrDefault(_ => _.Type == ClaimTypes.UserData)?.Value;
         if (!string.IsNullOrEmpty(userDataJson))
-            return JsonConvert.DeserializeObject<GetUserDTO>(userDataJson);
-        return null;
+            return JsonConvert.DeserializeObject<GetUserDTO>(userDataJson)!;
+        return new GetUserDTO();
     }
 
     private bool UserHasPermission(GetUserDTO userData, string[] role)

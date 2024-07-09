@@ -44,22 +44,6 @@ public class CardRepo : BaseRepo<UserCard>, ICardRepo
         ));
     }
 
-    //public async Task InsertAsync(AddCardDTO dto)
-    //{
-    //    await InsertAsync(new UserCard
-    //    (
-    //        dto.Name,
-    //        dto.Email,
-    //        dto.Last4Digit,
-    //        dto.Month,
-    //        dto.Year, 
-    //        dto.Type, 
-    //        dto.UserId, 
-    //        dto.CustomerId, 
-    //        dto.CardId 
-    //    ));
-    //}
-
     public async Task<UserCard> GetCardAsync(string id)
     {
         var filter = Builders<UserCard>.Filter.Eq(f => f.Id, id);
