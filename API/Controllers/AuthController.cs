@@ -12,26 +12,26 @@ public class AuthController(IUserRepo _userRepo) : ControllerBase
 {
     [HttpPost("register")]
     public async Task<IActionResult> Register(AddUserDTO request) 
-        => Ok(await _userRepo.InsertAsync(request).ToResponse(message: ResponseMessages.USER_ADDED));
+        => Ok(await _userRepo.InsertAsync(request).ToResponseAsync(message: ResponseMessages.USER_ADDED));
     
     [HttpPost("login")]
     public async Task<IActionResult> Login(LoginDTO request) 
-        => Ok(await _userRepo.LoginAsync(request).ToResponse());
+        => Ok(await _userRepo.LoginAsync(request).ToResponseAsync());
     
     [HttpPost("google")]
     public async Task<IActionResult> GoogleLogin(GoogleLoginDTO request) 
-        => Ok(await _userRepo.GoogleLoginAsync(request).ToResponse());
+        => Ok(await _userRepo.GoogleLoginAsync(request).ToResponseAsync());
     
     [HttpGet]
     public async Task<IActionResult> Get()
-        => Ok(await _userRepo.GetUsersAsync().ToResponse());
+        => Ok(await _userRepo.GetUsersAsync().ToResponseAsync());
 
     [HttpGet("{id}")]
     public async Task<IActionResult> Get(string id)
-        => Ok(await _userRepo.GetUserAsync(id).ToResponse());
+        => Ok(await _userRepo.GetUserAsync(id).ToResponseAsync());
     
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(string id)
-        => Ok(await _userRepo.DeleteAsync(id).ToResponse(message: ResponseMessages.USER_DELETED));
+        => Ok(await _userRepo.DeleteAsync(id).ToResponseAsync(message: ResponseMessages.USER_DELETED));
 
 }

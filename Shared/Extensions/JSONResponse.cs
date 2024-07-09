@@ -4,7 +4,7 @@ namespace Shared.Extensions;
 
 public static class JSONResponse
 {
-    public static async Task<ResponseModel<T>> ToResponse<T>(this Task<T> task, bool status = true, int statusCode = 200, string message = "", object data = null)
+    public static async Task<ResponseModel<T>> ToResponseAsync<T>(this Task<T> task, bool status = true, int statusCode = 200, string message = "", object data = null)
     {
         var result = await task;
         return new ResponseModel<T>
@@ -15,9 +15,19 @@ public static class JSONResponse
             Data = result
         };
     }
-    public static async Task<ResponseModel> ToResponse(this Task task, bool status = true, int statusCode = 200, string message = "")
+    public static async Task<ResponseModel> ToResponseAsync(this Task task, bool status = true, int statusCode = 200, string message = "")
     {
         await task;
+        return new ResponseModel
+        {
+            Status = status,
+            StatusCode = statusCode,
+            Message = message,
+        };
+    }
+
+    public static ResponseModel ToResponse<T>(this T value, bool status = true, int statusCode = 200, string message = "")
+    {
         return new ResponseModel
         {
             Status = status,

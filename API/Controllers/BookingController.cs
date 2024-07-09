@@ -13,7 +13,7 @@ public class BookingController(ICardRepo _cardRepo) : ControllerBase
 {
     [HttpPost("create-customer")]
     public async Task<IActionResult> CreateCustomer(AddCustomerCardDTO request) =>
-        Ok(await _cardRepo.InsertAsync(request).ToResponse());
+        Ok(await _cardRepo.InsertAsync(request).ToResponseAsync());
 }
 
     

@@ -49,3 +49,38 @@ System.InvalidOperationException: Unable to resolve service for type 'Domain.Rep
    at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
    at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
    at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.Invoke(HttpContext context)
+2024-07-09 23:02:24.940 +05:00 [ERR] An unhandled exception has occurred while executing the request.
+MongoDB.Driver.Linq.ExpressionNotSupportedException: Expression not supported: GenerateFileUrl(blog.ImageURL, 7/9/2024 6:22:24 PM).
+   at MongoDB.Driver.Linq.Linq3Implementation.Translators.ExpressionToAggregationExpressionTranslators.MethodCallExpressionToAggregationExpressionTranslator.Translate(TranslationContext context, MethodCallExpression expression)
+   at MongoDB.Driver.Linq.Linq3Implementation.Translators.ExpressionToAggregationExpressionTranslators.ExpressionToAggregationExpressionTranslator.Translate(TranslationContext context, Expression expression)
+   at MongoDB.Driver.Linq.Linq3Implementation.Translators.ExpressionToAggregationExpressionTranslators.MemberInitExpressionToAggregationExpressionTranslator.Translate(TranslationContext context, Expression expression, NewExpression newExpression, IReadOnlyList`1 bindings)
+   at MongoDB.Driver.Linq.Linq3Implementation.Translators.ExpressionToAggregationExpressionTranslators.MemberInitExpressionToAggregationExpressionTranslator.Translate(TranslationContext context, MemberInitExpression expression)
+   at MongoDB.Driver.Linq.Linq3Implementation.Translators.ExpressionToAggregationExpressionTranslators.ExpressionToAggregationExpressionTranslator.Translate(TranslationContext context, Expression expression)
+   at MongoDB.Driver.Linq.Linq3Implementation.Translators.ExpressionToAggregationExpressionTranslators.ExpressionToAggregationExpressionTranslator.TranslateLambdaBody(TranslationContext context, LambdaExpression lambdaExpression, IBsonSerializer parameterSerializer, Boolean asRoot)
+   at MongoDB.Driver.Linq.Linq3Implementation.Translators.ExpressionToPipelineTranslators.SelectMethodToPipelineTranslator.Translate(TranslationContext context, MethodCallExpression expression)
+   at MongoDB.Driver.Linq.Linq3Implementation.Translators.ExpressionToPipelineTranslators.ExpressionToPipelineTranslator.Translate(TranslationContext context, Expression expression)
+   at MongoDB.Driver.Linq.Linq3Implementation.Translators.ExpressionToExecutableQueryTranslators.ExpressionToExecutableQueryTranslator.Translate[TDocument,TOutput](MongoQueryProvider`1 provider, Expression expression)
+   at MongoDB.Driver.Linq.Linq3Implementation.MongoQuery`2.Execute()
+   at MongoDB.Driver.Linq.Linq3Implementation.MongoQuery`2.GetEnumerator()
+   at System.Collections.Generic.List`1..ctor(IEnumerable`1 collection)
+   at System.Linq.Enumerable.ToList[TSource](IEnumerable`1 source)
+   at Application.Implementations.BlogRepo.GetUsersAsync(Int32 pageNumber, Int32 pageSize) in C:\Users\Dev372k\Documents\GitHub\Vacantina\Application\Implementations\BlogRepo.cs:line 64
+   at Shared.Extensions.JSONResponse.ToResponseAsync[T](Task`1 task, Boolean status, Int32 statusCode, String message, Object data) in C:\Users\Dev372k\Documents\GitHub\Vacantina\Shared\Extensions\JSONResponse.cs:line 9
+   at API.Controllers.BlogController.Get(Int32 pageNumber, Int32 pageSize) in C:\Users\Dev372k\Documents\GitHub\Vacantina\API\Controllers\BlogController.cs:line 26
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at API.Middlewares.CustomMiddleware.Invoke(HttpContext context) in C:\Users\Dev372k\Documents\GitHub\Vacantina\API\Middlewares\CustomMiddleware.cs:line 38
+   at API.Middlewares.FileMiddleware.InvokeAsync(HttpContext context) in C:\Users\Dev372k\Documents\GitHub\Vacantina\API\Middlewares\FileMiddleware.cs:line 55
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.Invoke(HttpContext context)

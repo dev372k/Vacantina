@@ -14,5 +14,5 @@ public class AppController(IAppRepo _appRepo) : ControllerBase
 {
     [HttpPost("contact")]
     public async Task<IActionResult> Contact(ContactDTO request) 
-        => Ok(await _appRepo.Contact(request).ToResponse(message: ResponseMessages.CONTACT_ADDED));
+        => Ok(await _appRepo.Contact(request).ToResponseAsync(message: ResponseMessages.CONTACT_ADDED));
 }

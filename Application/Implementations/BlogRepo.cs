@@ -2,15 +2,12 @@
 using Domain.Documents;
 using Domain.Repositories;
 using Domain.Repositories.Services;
-using Microsoft.AspNetCore.Http;
 using MongoDB.Driver;
 using Shared.DTOs.BlogDTOs;
 using Shared.Exceptions.Messages;
 using Shared.Exceptions;
-using Stripe;
 using System.Net;
 using Shared.Helpers;
-using System.Drawing.Printing;
 using Shared.Extensions;
 
 namespace Application.Implementations;
@@ -59,9 +56,13 @@ public class BlogRepo : BaseRepo<Blog>, IBlogRepo
         };
     }
 
-    public List<GetBlogDTO> GetUsersAsync(int pageNumber = 1, int pageSize = 10)
+    public async Task<List<GetBlogDTO>> GetUsersAsync(int pageNumber = 1, int pageSize = 10)
     {
-        return Collection.AsQueryable().Paginate(pageNumber, pageSize).Select(blog => new GetBlogDTO
+        var blogs = Collection.AsQueryable()
+                                   .Paginate(pageNumber, pageSize)
+                                   .ToList();
+
+        return blogs.Select(blog => new GetBlogDTO
         {
             Id = blog.Id,
             Title = blog.Title,
@@ -69,8 +70,9 @@ public class BlogRepo : BaseRepo<Blog>, IBlogRepo
             ImageURL = SecurityHelper.GenerateFileUrl(blog.ImageURL, DateTime.UtcNow.AddMinutes(20)),
             IsFeatured = blog.IsFeatured,
             Tags = blog.Tags
-        }).ToList();    
+        }).ToList();
     }
+
 
     public async Task UpdateAsync(UpdateBlogDTO dto)
     {
