@@ -21,7 +21,22 @@ namespace API.Middlewares
         {
             try
             {
-                await _next(context);
+                if (!context.Request.Headers.TryGetValue("X-Correlation-ID", out var correlationId))
+                {
+                    correlationId = Guid.NewGuid().ToString();
+                    context.Request.Headers["X-Correlation-ID"] = correlationId;
+                }
+
+                context.Response.OnStarting(() =>
+                {
+                    context.Response.Headers["X-Correlation-ID"] = correlationId;
+                    return Task.CompletedTask;
+                });
+
+                using (_logger.BeginScope(new Dictionary<string, object> { { "CorrelationId", correlationId } }))
+                {
+                    await _next(context);
+                }
             }
             catch (CustomException ex)
             {
