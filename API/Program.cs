@@ -33,6 +33,7 @@ var app = builder.Build();
 //}
 
 app.UseCors(MiscilenousConstants._policy);
+app.UseMiddleware<FileMiddleware>();
 app.UseMiddleware<CustomMiddleware>();
 
 app.UseHttpsRedirection();
@@ -40,6 +41,7 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseStaticFiles();
+
 app.MapControllers();
 
 app.Run();
