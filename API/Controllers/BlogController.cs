@@ -13,7 +13,7 @@ namespace API.Controllers
     {
         [HttpPost, Authorize]
         [IsAuthorized(["Admin"])]
-        public async Task<IActionResult> Post(AddBlogDTO request)
+        public async Task<IActionResult> Post(AddBlogDTO request, IFormFile uploadFile)
             => Ok(await _blogRepo.InsertAsync(request).ToResponse(message: ResponseMessages.BLOG_ADDED));
 
         [HttpPut, Authorize]
@@ -22,14 +22,13 @@ namespace API.Controllers
             => Ok(await _blogRepo.UpdateAsync(request).ToResponse(message: ResponseMessages.BLOG_UPDATED));
 
         [HttpGet]
-        public async Task<IActionResult> Get()
-            => Ok(await _blogRepo.GetUsersAsync().ToResponse());
+        public async Task<IActionResult> Get(int pageNumber = 1, int pageSize = 10)
+            => Ok(await _blogRepo.GetUsersAsync(pageNumber, pageSize).ToResponse());
 
-        [HttpGet("{id}"), Authorize]
-        [IsAuthorized(["Admin"])]
+        [HttpGet("{id}")]
         public async Task<IActionResult> Get(string id)
             => Ok(await _blogRepo.GetUserAsync(id).ToResponse());
-        
+
         [HttpDelete("{id}"), Authorize]
         [IsAuthorized(["Admin"])]
         public async Task<IActionResult> Delete(string id)

@@ -9,6 +9,6 @@ public interface IBlogRepo : IBaseRepo<Blog>
 {
     Task InsertAsync(AddBlogDTO dto);
     Task UpdateAsync(UpdateBlogDTO dto);
-    Task<IEnumerable<Blog>> GetUsersAsync();
-    Task<Blog> GetUserAsync(string id);
+    List<GetBlogDTO> GetUsersAsync(int pageNumber = 1, int pageSize = 10);
+    Task<GetBlogDTO> GetUserAsync(string id);
 }

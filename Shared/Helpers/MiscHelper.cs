@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.Repositories.Services;
+namespace Shared.Helpers;
 
-public interface IFileService
+public static class MiscHelper
 {
-    Task<string> SaveAsync(byte[] imageData);
+
 }

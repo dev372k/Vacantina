@@ -6,13 +6,14 @@ using System.Threading.Tasks;
 
 namespace Shared.DTOs.BlogDTOs
 {
-    public class UpdateBlogDTO
+    public class GetBlogDTO
     {
         public string Id { get; set; }
         public string Title { get; set; }
 
         public string Content { get; set; }
-        public byte[] Image { get; set; }
+
+        public string ImageURL { get; set; }
         public bool IsFeatured { get; set; }
 
         public List<string> Tags { get; set; }

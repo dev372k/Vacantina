@@ -5,7 +5,7 @@ namespace Infrastructure.Services;
 
 public class FileService : IFileService
 {
-    public async Task<string> SaveImage(byte[] imageData)
+    public async Task<string> SaveAsync(byte[] imageData)
     {
         var filename = Path.Combine(MiscilenousConstants.IMAGEPATH, $"{Guid.NewGuid()}.jpeg");
         string filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", filename);

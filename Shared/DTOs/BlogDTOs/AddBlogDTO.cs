@@ -12,7 +12,7 @@ namespace Shared.DTOs.BlogDTOs
 
         public string Content { get; set; }
 
-        public string ImageURL { get; set; }
+        public byte[] Image { get; set; }
         public bool IsFeatured { get; set; }
 
         public List<string> Tags { get; set; }
