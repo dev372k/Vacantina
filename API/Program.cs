@@ -11,6 +11,7 @@ Log.Logger = new LoggerConfiguration()
     .WriteTo.File(MiscilenousConstants.LOGPATH, rollingInterval: RollingInterval.Day)
     .CreateLogger();
 
+builder.Services.AddHttpContextAccessor();
 builder.Services.APIServicesRegistry(builder.Configuration);
 builder.Logging.ClearProviders();
 builder.Logging.AddSerilog();

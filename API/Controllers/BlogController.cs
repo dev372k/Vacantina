@@ -21,8 +21,7 @@ namespace API.Controllers
         public async Task<IActionResult> Put(UpdateBlogDTO request)
             => Ok(await _blogRepo.UpdateAsync(request).ToResponse(message: ResponseMessages.BLOG_UPDATED));
 
-        [HttpGet, Authorize]
-        [IsAuthorized(["Admin"])]
+        [HttpGet]
         public async Task<IActionResult> Get()
             => Ok(await _blogRepo.GetUsersAsync().ToResponse());
 

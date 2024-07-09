@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using MongoDB.Driver;
+using Shared;
 using Shared.Commons;
 using Swashbuckle.AspNetCore.Filters;
 using System.Text;
@@ -24,6 +25,7 @@ public static class ConfigureServices
 
     public static void Repositories(this IServiceCollection services, IConfiguration configuration)
     {
+        services.AddScoped<ICardRepo, CardRepo>();
         services.AddScoped<IUserRepo, UserRepo>();
         services.AddScoped<IBlogRepo, BlogRepo>();
         services.AddScoped<IAppRepo, AppRepo>();
@@ -86,6 +88,7 @@ public static class ConfigureServices
 
     public static void Services(this IServiceCollection services, IConfiguration configuration)
     {
+        services.AddSingleton<IStateHelper, StateHelper>();
         services.AddScoped<IFileService, FileService>();
         services.AddScoped<ICacheService, CacheService>();
         services.AddScoped<IEmailService, EmailService>();

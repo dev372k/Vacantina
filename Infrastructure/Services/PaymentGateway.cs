@@ -56,4 +56,23 @@ public class PaymentGateway : IPaymentGateway
         PaymentIntent paymentIntent = await service.CreateAsync(options);
         return paymentIntent;
     }
+
+    public async Task<Card> GetCustomerCardAsync(string customerId, string cardId)
+    {
+        var service = new CardService();
+        Card card = service.Get(customerId, cardId);
+        return card;
+    }
+
+    public async Task<List<PaymentMethod>> GetCustomerPaymentMethodsAsync(string customerId)
+    {
+        var options = new PaymentMethodListOptions
+        {
+            Customer = customerId,
+            Type = "card"
+        };
+
+        StripeList<PaymentMethod> paymentMethods = await new PaymentMethodService().ListAsync(options);
+        return paymentMethods.Data;
+    }
 }
