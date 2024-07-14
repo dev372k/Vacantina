@@ -1,4 +1,5 @@
 ﻿using Domain.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shared.Commons;
 using Shared.DTOs.UserDTOs;
@@ -21,17 +22,26 @@ public class AuthController(IUserRepo _userRepo) : ControllerBase
     [HttpPost("google")]
     public async Task<IActionResult> GoogleLogin(GoogleLoginDTO request) 
         => Ok(await _userRepo.GoogleLoginAsync(request).ToResponseAsync());
-    
-    [HttpGet]
+
+
+    [HttpGet, Authorize]
+    [IsAuthorized(["Admin"])]
     public async Task<IActionResult> Get()
         => Ok(await _userRepo.GetUsersAsync().ToResponseAsync());
 
-    [HttpGet("{id}")]
+    [HttpGet("{id}"), Authorize]
+    [IsAuthorized(["Admin", "User"])]
     public async Task<IActionResult> Get(string id)
         => Ok(await _userRepo.GetUserAsync(id).ToResponseAsync());
     
-    [HttpDelete("{id}")]
-    public async Task<IActionResult> Delete(string id)
-        => Ok(await _userRepo.DeleteAsync(id).ToResponseAsync(message: ResponseMessages.USER_DELETED));
+    [HttpDelete, Authorize]
+    [IsAuthorized(["Admin", "User"])]
+    public async Task<IActionResult> Delete()
+        => Ok(await _userRepo.DeleteAsync().ToResponseAsync(message: ResponseMessages.USER_DELETED));
+    
+    [HttpPut, Authorize]
+    [IsAuthorized(["Admin", "User"])]
+    public async Task<IActionResult> Put(UpdateUserDTO request)
+        => Ok(await _userRepo.UpdateAsync(request).ToResponseAsync(message: ResponseMessages.USER_DELETED));
 
 }

@@ -101,7 +101,7 @@ public static class ConfigureServices
 
         services.AddSingleton<IMongoClient>(c =>
         {
-            return new MongoClient($"mongodb+srv://Owais:owais@cluster0.wde1dec.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0");
+            return new MongoClient(configuration.GetConnectionString("MongoDB"));
         });
 
         services.AddScoped(c => c.GetService<IMongoClient>().StartSession());

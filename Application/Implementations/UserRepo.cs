@@ -10,14 +10,22 @@ using Shared.Helpers;
 using System.Net;
 using Google.Apis.Auth;
 using MongoDB.Bson;
+using Shared;
 
 namespace Application.Implementations;
 
 public class UserRepo : BaseRepo<User>, IUserRepo
 {
+    private IStateHelper _stateHelper;
+
     public UserRepo(
         IMongoClient mongoClient,
-        IClientSessionHandle clientSessionHandle) : base(mongoClient, clientSessionHandle, "user") { }
+        IClientSessionHandle clientSessionHandle,
+        IStateHelper stateHelper) : base(mongoClient, clientSessionHandle, "user") 
+    
+    {
+        _stateHelper = stateHelper;
+    }
 
     public async Task InsertAsync(AddUserDTO dto)
     {
@@ -28,20 +36,46 @@ public class UserRepo : BaseRepo<User>, IUserRepo
         (
             dto.Name,
             dto.Email,
+            dto.Phone,
+            "",
+            new DateTime(),
             SecurityHelper.GenerateHash(dto.PasswordHash),
             enRole.User
         ));
+    }   
+    public async Task DeleteAsync()
+    {
+        string id = _stateHelper.User().Id;
+        await DeleteAsync(id);
     }
+    public async Task UpdateAsync(UpdateUserDTO dto)
+    {
+        string id = _stateHelper.User().Id;
+        var user = await GetUserAsync(id);
+        if (user == null)
+            throw new CustomException(HttpStatusCode.OK, ExceptionMessages.USER_DOESNOT_EXIST);
 
+        user = new User
+        (
+            dto.Name,
+            dto.Email,
+            dto.Phone,
+            dto.Address,
+            dto.DoB,
+            user.PasswordHash,
+            enRole.User
+        );
+
+        user.SetId(id);
+        await UpdateAsync(user);
+    }
     public async Task<User> GetUserAsync(string id)
     {
         var filter = Builders<User>.Filter.Eq(f => f.Id, id);
         return await Collection.Find(filter).FirstOrDefaultAsync();
     }
-
     public async Task<IEnumerable<User>> GetUsersAsync() =>
         await Collection.AsQueryable().ToListAsync();
-
     public async Task<string> GoogleLoginAsync(GoogleLoginDTO dto)
     {
         var payload = await GoogleJsonWebSignature.ValidateAsync(dto.IdToken);
@@ -62,6 +96,9 @@ public class UserRepo : BaseRepo<User>, IUserRepo
             (
                 payload.Name,
                 payload.Email,
+                "",
+                "",
+                new DateTime(),
                 "",
                 enRole.User
             );
@@ -103,13 +140,11 @@ public class UserRepo : BaseRepo<User>, IUserRepo
         var user = await Collection.Find(filter).FirstOrDefaultAsync();
         return user != null;
     }
-
     private async Task<User> GetUserbyEmailAsync(string email)
     {
         var filter = Builders<User>.Filter.Eq(f => f.Email, email);
         var user = await Collection.Find(filter).FirstOrDefaultAsync();
         return user;
     }
-
     #endregion
 }

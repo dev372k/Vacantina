@@ -7,6 +7,8 @@ namespace Domain.Repositories;
 public interface IUserRepo : IBaseRepo<User>
 {
     Task InsertAsync(AddUserDTO dto);
+    Task UpdateAsync(UpdateUserDTO dto);
+    Task DeleteAsync();
     Task<string> LoginAsync(LoginDTO dto);
     Task<string> GoogleLoginAsync(GoogleLoginDTO dto);
     Task<IEnumerable<User>> GetUsersAsync();
