@@ -17,34 +17,6 @@ namespace Infrastructure.Services;
 
 public class HotelService : IHotelService
 {
-    public SelectList GetAmenities()
-    {
-        var values = Enum.GetValues(typeof(enHotelAmenities))
-                         .Cast<enHotelAmenities>()
-                         .Select(e => new SelectListItem
-                         {
-                             Value = e.ToString(),
-                             Text = e.ToString().Replace("_", " ") // Optional: Replace underscores with spaces for display
-                         })
-                         .ToList();
-
-        return new SelectList(values, "Value", "Text");
-    }
-    
-    public SelectList GetBoardType()
-    {
-        var values = Enum.GetValues(typeof(enHotelBoardType))
-                         .Cast<enHotelBoardType>()
-                         .Select(e => new SelectListItem
-                         {
-                             Value = e.ToString(),
-                             Text = e.ToString().Replace("_", " ") // Optional: Replace underscores with spaces for display
-                         })
-                         .ToList();
-
-        return new SelectList(values, "Value", "Text");
-    }
-
     public async Task<GetHotelDTO> GetHotels(HotelFilter filter)
     {
         Appsettings appsettings = Appsettings.Instance;
@@ -58,7 +30,7 @@ public class HotelService : IHotelService
                              $"&radiusUnit={filter.RadiusUnit}" +
                              $"&amenities={filter.Amenities}" +
                              $"&ratings={filter.Ratings}" +
-                             $"&hotelSource={filter.HotelSource}";
+                             $"&hotelSource=ALL";
 
             var request = new HttpRequestMessage(HttpMethod.Get, requestUri);
             request.Headers.Add("Accept", "application/vnd.amadeus+json");

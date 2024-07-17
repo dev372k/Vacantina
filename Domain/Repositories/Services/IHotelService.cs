@@ -6,7 +6,5 @@ namespace Domain.Repositories.Services;
 
 public interface IHotelService
 {
-    SelectList GetAmenities();
-    SelectList GetBoardType();
     Task<GetHotelDTO> GetHotels(HotelFilter filter);
 }
