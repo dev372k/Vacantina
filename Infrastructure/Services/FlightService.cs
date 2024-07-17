@@ -1,6 +1,6 @@
 ﻿using Domain.Repositories.Services;
 using Shared.DTOs.Service.FlightDTOs;
-using Shared.Helpers;
+using Shared.Helpers.Amadeus;
 
 namespace Infrastructure.Services;
 

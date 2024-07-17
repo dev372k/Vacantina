@@ -48,3 +48,4 @@ public class GetHotelDTO
     public List<Hotel> Data { get; set; }
     public Meta Meta { get; set; }
 }
+

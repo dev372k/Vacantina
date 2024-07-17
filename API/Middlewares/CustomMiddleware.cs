@@ -41,6 +41,7 @@ namespace API.Middlewares
             catch (CustomException ex)
             {
                 _logger.LogError($"Error Message: {ex}\n Error Detail: {ex.InnerException?.ToString()}");
+                context.Response.StatusCode = (int)ex.StatusCode;
                 await context.Response.WriteAsJsonAsync(new ResponseModel   
                 {
                     Status = false,

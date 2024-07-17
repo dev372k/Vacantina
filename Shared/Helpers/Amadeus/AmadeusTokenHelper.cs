@@ -2,7 +2,7 @@
 using Shared.DTOs.Service.FlightDTOs;
 using System.Net.Http.Headers;
 
-namespace Shared.Helpers;
+namespace Shared.Helpers.Amadeus;
 
 public class AmadeusTokenHelper
 {
