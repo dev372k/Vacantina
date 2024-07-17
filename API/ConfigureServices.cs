@@ -28,6 +28,7 @@ public static class ConfigureServices
         services.AddScoped<ICardRepo, CardRepo>();
         services.AddScoped<IUserRepo, UserRepo>();
         services.AddScoped<IBlogRepo, BlogRepo>();
+        services.AddScoped<IHotelRepo, HotelRepo>();
         services.AddScoped<IAppRepo, AppRepo>();
     }
 
@@ -89,6 +90,8 @@ public static class ConfigureServices
     public static void Services(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddSingleton<IStateHelper, StateHelper>();
+        services.AddScoped<IFlightService, FlightService>();
+        services.AddScoped<IHotelService, HotelService>();
         services.AddScoped<IFileService, FileService>();
         services.AddScoped<ICacheService, CacheService>();
         services.AddScoped<IEmailService, EmailService>();
