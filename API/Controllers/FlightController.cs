@@ -1,4 +1,6 @@
-﻿using Domain.Repositories.Services;
+﻿using Application.Implementations;
+using Domain.Repositories.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shared.Extensions;
 
@@ -9,40 +11,38 @@ namespace API.Controllers;
 public class FlightController : ControllerBase
 {
     private readonly IHttpContextAccessor _httpContextAccessor;
-    private readonly IFlightService _flightService;
+    private readonly BookingRepo _bookingRepo;
 
-    public FlightController(IHttpContextAccessor httpContextAccessor, IFlightService flightService)
+    public FlightController(IHttpContextAccessor httpContextAccessor, BookingRepo bookingRepo)
     {
         _httpContextAccessor = httpContextAccessor;
-        _flightService = flightService;
+        _bookingRepo = bookingRepo;
     }
 
-    [HttpGet("Session")]
+    [HttpGet("Session"), Authorize]
     public async Task<IActionResult> Session()
     {
-        var response = await _flightService.Session().ToResponseAsync();
-        return Ok(response);
+        return Ok(await _bookingRepo.Flight().ToResponseAsync());
     }
 
     [HttpGet("Success")]
     public IActionResult Success()
     {
-        var check = _httpContextAccessor.HttpContext;
-        // Do something with 'check' if needed
-        return Ok();
+        //var reference = _httpContextAccessor.HttpContext.Request.Query["reference"];
+        //var orderId = _httpContextAccessor.HttpContext.Request.Query["order_id"];
+
+        return Redirect(Appsettings.Instance.GetValue("Frontend:Page:Success"));
     }
 
     [HttpGet("Failure")]
     public IActionResult Failure()
     {
-        // Implement functionality if needed
-        return Ok();
+        return Ok(Appsettings.Instance.GetValue("Frontend:Page:Failure"));
     }
 
     [HttpGet("Abandonment")]
     public IActionResult Abandonment()
     {
-        // Implement functionality if needed
-        return Ok();
+        return Ok(Appsettings.Instance.GetValue("Frontend:Page:Home"));
     }
 }

@@ -10,5 +10,5 @@ namespace Domain.Repositories.Services;
 public interface IFlightService
 {
     Task<object> GetFlights(FlightFilter filter);
-    Task Session();
+    Task<string> Session(string UserId);
 }

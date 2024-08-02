@@ -27,6 +27,7 @@ public static class ConfigureServices
     {
         services.AddScoped<ICardRepo, CardRepo>();
         services.AddScoped<IUserRepo, UserRepo>();
+        services.AddScoped<BookingRepo>();
         services.AddScoped<IBlogRepo, BlogRepo>();
         services.AddScoped<IHotelRepo, HotelRepo>();
         services.AddScoped<IAppRepo, AppRepo>();

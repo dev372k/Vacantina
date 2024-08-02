@@ -36,17 +36,46 @@ public class FlightService : IFlightService
     }
 
     // Duffel
-    public async Task Session()
+    public async Task<string> Session(string UserId)
     {
         Appsettings appsettings = Appsettings.Instance;
         var client = new HttpClient();
         var request = new HttpRequestMessage(HttpMethod.Post, appsettings.GetValue("Duffels:SessionAPI"));
         request.Headers.Add("Duffel-Version", "v1");
         request.Headers.Add("Authorization", $"Bearer {appsettings.GetValue("Duffels:APIKey")}");
-        var content = new StringContent("{\r\n    \r\n    \"data\": {\r\n        \"reference\": \"USER_1\",\r\n        \"success_url\": \"https://vacatina.vercel.app/\",\r\n        \"failure_url\": \"https://vacatina.vercel.app/\",\r\n        \"abandonment_url\": \"https://vacatina.vercel.app/\",\r\n        \"logo_url\": \"https://dashboard.zakhaer.com/download.png\",\r\n        \"checkout_display_text\": \"Checkout\",\r\n        \"primary_color\": \"#3498DB\",\r\n        \"secondary_color\": \"#3498DB\",\r\n        \"traveller_currency\": \"USD\",\r\n        \"markup_amount\": \"1.00\",\r\n        \"markup_currency\": \"USD\",\r\n        \"markup_rate\": \"0.01\",\r\n        \"flights\": {\r\n            \"enabled\": \"true\"\r\n        },\r\n        \"stays\": {\r\n            \"enabled\": \"false\"\r\n        }\r\n    }\r\n}", null, "application/json");
+
+        var data = new
+        {
+            data = new
+            {
+                reference = UserId,
+                success_url = $"{appsettings.GetValue("Duffels:FallbackURL")}/success",
+                failure_url = $"{appsettings.GetValue("Duffels:FallbackURL")}/failure",
+                abandonment_url = $"{appsettings.GetValue("Duffels:FallbackURL")}/abandonment",
+                logo_url = "https://dashboard.zakhaer.com/download.png",
+                checkout_display_text = "Checkout",
+                primary_color = "#fff",
+                secondary_color = "#3498DB",
+                traveller_currency = "USD",
+                markup_amount = "1.00",
+                markup_currency = "USD",
+                markup_rate = "0.01",
+                flights = new
+                {
+                    enabled = "true"
+                },
+                stays = new
+                {
+                    enabled = "false"
+                }
+            }
+        };
+
+        var content = new StringContent(System.Text.Json.JsonSerializer.Serialize(data), null, "application/json");
         request.Content = content;
+
         var response = await client.SendAsync(request);
         response.EnsureSuccessStatusCode();
-        var json = await response.Content.ReadAsStringAsync();
+        return await response.Content.ReadAsStringAsync();
     }
 }
