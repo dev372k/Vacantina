@@ -13,7 +13,7 @@ namespace API.Controllers
     {
         [HttpPost, Authorize]
         [IsAuthorized(["Admin"])]
-        public async Task<IActionResult> Post(AddBlogDTO request, IFormFile uploadFile)
+        public async Task<IActionResult> Post(AddBlogDTO request)
             => Ok(await _blogRepo.InsertAsync(request).ToResponseAsync(message: ResponseMessages.BLOG_ADDED));
 
         [HttpPut, Authorize]
