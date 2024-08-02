@@ -34,4 +34,19 @@ public class FlightService : IFlightService
         response.EnsureSuccessStatusCode();
         return await response.Content.ReadAsStringAsync();
     }
+
+    // Duffel
+    public async Task Session()
+    {
+        Appsettings appsettings = Appsettings.Instance;
+        var client = new HttpClient();
+        var request = new HttpRequestMessage(HttpMethod.Post, appsettings.GetValue("Duffels:SessionAPI"));
+        request.Headers.Add("Duffel-Version", "v1");
+        request.Headers.Add("Authorization", $"Bearer {appsettings.GetValue("Duffels:APIKey")}");
+        var content = new StringContent("{\r\n    \r\n    \"data\": {\r\n        \"reference\": \"USER_1\",\r\n        \"success_url\": \"https://vacatina.vercel.app/\",\r\n        \"failure_url\": \"https://vacatina.vercel.app/\",\r\n        \"abandonment_url\": \"https://vacatina.vercel.app/\",\r\n        \"logo_url\": \"https://dashboard.zakhaer.com/download.png\",\r\n        \"checkout_display_text\": \"Checkout\",\r\n        \"primary_color\": \"#3498DB\",\r\n        \"secondary_color\": \"#3498DB\",\r\n        \"traveller_currency\": \"USD\",\r\n        \"markup_amount\": \"1.00\",\r\n        \"markup_currency\": \"USD\",\r\n        \"markup_rate\": \"0.01\",\r\n        \"flights\": {\r\n            \"enabled\": \"true\"\r\n        },\r\n        \"stays\": {\r\n            \"enabled\": \"false\"\r\n        }\r\n    }\r\n}", null, "application/json");
+        request.Content = content;
+        var response = await client.SendAsync(request);
+        response.EnsureSuccessStatusCode();
+        var json = await response.Content.ReadAsStringAsync();
+    }
 }
