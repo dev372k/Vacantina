@@ -28,8 +28,8 @@ public class FlightController : ControllerBase
     [HttpGet("Success")]
     public IActionResult Success()
     {
-        //var reference = _httpContextAccessor.HttpContext.Request.Query["reference"];
-        //var orderId = _httpContextAccessor.HttpContext.Request.Query["order_id"];
+        var reference = _httpContextAccessor.HttpContext.Request.Query["reference"];
+        var orderId = _httpContextAccessor.HttpContext.Request.Query["order_id"];
 
         return Redirect(Appsettings.Instance.GetValue("Frontend:Page:Success"));
     }
