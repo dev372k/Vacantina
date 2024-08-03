@@ -1,4 +1,5 @@
 ﻿using Domain.Repositories.Services;
+using Newtonsoft.Json.Linq;
 using Shared.DTOs.Service.FlightDTOs;
 using Shared.Helpers;
 
@@ -52,7 +53,7 @@ public class FlightService : IFlightService
                 success_url = $"{appsettings.GetValue("Duffels:FallbackURL")}/success",
                 failure_url = $"{appsettings.GetValue("Duffels:FallbackURL")}/failure",
                 abandonment_url = $"{appsettings.GetValue("Duffels:FallbackURL")}/abandonment",
-                logo_url = "https://dashboard.zakhaer.com/download.png",
+                logo_url = "",
                 checkout_display_text = "Checkout",
                 primary_color = "#fff",
                 secondary_color = "#3498DB",
@@ -60,14 +61,8 @@ public class FlightService : IFlightService
                 markup_amount = "1.00",
                 markup_currency = "USD",
                 markup_rate = "0.01",
-                flights = new
-                {
-                    enabled = "true"
-                },
-                stays = new
-                {
-                    enabled = "false"
-                }
+                flights = new { enabled = "true" },
+                stays = new { enabled = "false" }
             }
         };
 
@@ -76,6 +71,8 @@ public class FlightService : IFlightService
 
         var response = await client.SendAsync(request);
         response.EnsureSuccessStatusCode();
-        return await response.Content.ReadAsStringAsync();
+
+        return JObject.Parse(await response.Content.ReadAsStringAsync())["data"]["url"].ToString()
+            ?? String.Empty;
     }
 }
