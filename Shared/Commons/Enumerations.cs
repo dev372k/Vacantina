@@ -12,6 +12,13 @@ public enum enRole
     User
 }
 
+public enum enBookingType
+{
+    Flight,
+    Hotel,
+    Car
+}
+
 
 public enum enHotelBoardType
 {
